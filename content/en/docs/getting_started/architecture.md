@@ -12,9 +12,8 @@ for `(Cluster)Package`, `(Cluster)ObjectDeployment`, and `(Cluster)ObjectSet` re
 It also contains a controller for `(Cluster)ObjectSetPhase` objects. This controller
 reconciles `(Cluster)ObjectSetPhase`s with the `.spec.class` set to `default`.
 
-Package Operator Manager also contains functionality to copy its own binary and
-load packages, which is discussed in the [Loading Package Images Section](#loading-package-images),
-and functionality to allow Package Operator to bootstrap itself, which is discussed
+Package Operator Manager also contains functionality to allow
+Package Operator to bootstrap itself, which is discussed
 on the [Installation Page](/docs/getting_started/installation#via_package_operator).
 
 ## Webhooks
@@ -32,16 +31,5 @@ the form of a non-runnable container image. This image is supplied to Package
 Operator in a `(Cluster)Package` object.
 
 When Package Operator reconciles a `(Cluster)Package` object, it needs to access
-the content of the package image. Package Operator does this by deploying a separate
-Kubernetes Job. This Job has two containers, an init container called `prepare-loader`
-and a regular container called `package-loader`.
-
-The `prepare-loader` container uses the `package-operator-manager` image and copies
-the `package-operator-manager` binary to a shared volume that both containers in
-the Job have access to. We have to do this because as mentioned before, the package
-image is non-runnable, so we have to assume it has no shell or copy utilities to
-unpack the files it contains.
-
-The `package-loader` container then uses the `package-operator-manager` binary to
-create an `ObjectDeployment` that contains all the necessary information from the
-package image. The Job then finishes and is garbage collected.
+the content of the package image. Package Operator does this by pulling the
+package image directly inside the package-operator-manager binary.

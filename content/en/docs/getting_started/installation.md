@@ -4,7 +4,9 @@ weight: 400
 images: []
 ---
 
-Package Operator can be installed in multiple different ways.
+We only support a single method of installing Package Operator
+at the time: [Bootstrapping Package Operator via Package Operator](#via-package-operator).
+
 Check the latest available release at [Package Operator Releases](https://github.com/package-operator/package-operator/releases).
 
 ## Via Package Operator
@@ -19,15 +21,6 @@ kubectl create -f https://github.com/package-operator/package-operator/releases/
 ```
 
 This will not install the webhook server.
-
-## Via Mage
-
-Clone the [Package Operator](https://github.com/package-operator/package-operator)
-repository. Make sure `KUBECONFIG` is defined and the config points at your
-Kubernetes cluster. From the root of the repository run
-`VERSION="<Release to install>" ./mage deploy`.
-
-This will install the Package Operator Manager and the webhook server.
 
 ## kubectl package plugin
 
