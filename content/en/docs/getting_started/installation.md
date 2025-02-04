@@ -14,13 +14,21 @@ Check the latest available release at [Package Operator Releases](https://github
 Package Operator is able to bootstrap and upgrade itself using a special self-bootstrap-job.
 
 Make sure `KUBECONFIG` is defined and the config points at your Kubernetes cluster.
-Then you can deploy Package Operator to bootstrap itself:
+Then you can deploy Package Operator to bootstrap itself.
+
+Note: Both these command will not install the webhook server.
+
+### Using `kubectl` cli
 
 ```sh
 kubectl create -f https://github.com/package-operator/package-operator/releases/latest/download/self-bootstrap-job.yaml
 ```
 
-This will not install the webhook server.
+### Using `helm` cli
+
+```sh
+helm upgrade --install package-operator oci://quay.io/package-operator/helm-charts/package-operator
+```
 
 ## kubectl package plugin
 
