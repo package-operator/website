@@ -16,13 +16,6 @@ Package Operator Manager also contains functionality to allow
 Package Operator to bootstrap itself, which is discussed
 on the [Installation Page](/docs/getting_started/installation#via_package_operator).
 
-## Webhooks
-
-There is a validation webhook server that can optionally be run with package operator.
-This webhook server verifies the immutability of certain fields of `ObjectSet`
-and `ObjectSetPhase` resources. If one of these immutable fields is changed in
-an update, the webhook server will disallow the update.
-
 ## Loading Package Images
 
 A package is a single artifact that contains all manifests, configuration,
