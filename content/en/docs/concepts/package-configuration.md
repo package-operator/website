@@ -595,7 +595,36 @@ Example `manifest.yaml`:
 These steps guided you through deploying and updating your application using package
 configuration and ClusterObjectTemplates with the Package Operator.
 
-## Error Messages and Troubleshooting
+## Troubleshooting
+
+### Logging Behavior
+
+The `logLevel` configuration helps you control the verbosity of logs to aid in troubleshooting.
+
+To increase verbosity for troubleshooting,
+update the `logLevel` via the `spec.config` field of your `ClusterPackage`.
+For example:
+
+```bash
+kubectl patch clusterpackage package-operator \
+  --type=merge \
+  -p '{"spec": {"config": {"logLevel": 1}}}'
+```
+
+**Log Level Reference:**
+
+| `logLevel` | Output Includes                                                                 |
+|------------|----------------------------------------------------------------------------------|
+| `-1`       | `log.Error()` – Default level; errors logs shown. |
+| `0`        | `log.Error()` and `log.Info()` – Base level of informational logs. |
+| `1`        | `log.Error()`, `log.Info()`, and `log.V(1).Info()` – Adds first level of debug. |
+| `2`        | Above plus `log.V(2).Info()` – includes second-level debug logs.                 |
+| ...        | Increasing verbosity with higher numbers – adds `log.V(N).Info()` for N ≥ 3.     |
+
+This setting is helpful when debugging reconciliation behavior,
+unexpected resource changes, or communication issues across clusters.
+
+### Error Messages and Troubleshooting
 
 During the package configuration process, you may encounter common
 errors such as missing or incorrectly formatted values. Here are some
