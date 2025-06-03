@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-cat << 'EOF' > ./content/en/docs/getting_started/api-reference.md
+cat << 'EOF' > ./content/en/docs/api_reference/package-operator-api.md
 ---
 title: "API Reference"
 draft: false
@@ -45,4 +45,4 @@ _Taken from the [Kubernetes API versioning documentation](https://kubernetes.io/
 
 EOF
 
-cat $1 >> ./content/en/docs/getting_started/api-reference.md
+cat $1 >> ./content/en/docs/api_reference/package-operator-api.md

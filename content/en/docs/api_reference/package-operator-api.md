@@ -1,5 +1,5 @@
 ---
-title: "Package Operator API"
+title: "API Reference"
 draft: false
 images: []
 weight: 700
@@ -33,7 +33,6 @@ _Taken from the [Kubernetes API versioning documentation](https://kubernetes.io/
 {{< /details >}}
 
 ### Group versions
-
 - [package-operator.run/v1alpha1](#package-operatorrunv1alpha1)\
 - [manifests.package-operator.run/v1alpha1](#manifestspackage-operatorrunv1alpha1)
 
@@ -42,22 +41,24 @@ _Taken from the [Kubernetes API versioning documentation](https://kubernetes.io/
 Package v1alpha1 contains API Schema definitions for the v1alpha1 version of the core Package Operator API group,
 containing basic building blocks that other auxiliary APIs can build on top of.
 
-- [ClusterObjectDeployment](#clusterobjectdeployment)
-- [ClusterObjectSet](#clusterobjectset)
-- [ClusterObjectSetPhase](#clusterobjectsetphase)
-- [ClusterObjectSlice](#clusterobjectslice)
-- [ClusterObjectTemplate](#clusterobjecttemplate)
-- [ClusterPackage](#clusterpackage)
-- [ObjectDeployment](#objectdeployment)
-- [ObjectSet](#objectset)
-- [ObjectSetPhase](#objectsetphase)
-- [ObjectSlice](#objectslice)
-- [ObjectTemplate](#objecttemplate)
-- [Package](#package)
+* [ClusterObjectDeployment](#clusterobjectdeployment)
+* [ClusterObjectSet](#clusterobjectset)
+* [ClusterObjectSetPhase](#clusterobjectsetphase)
+* [ClusterObjectSlice](#clusterobjectslice)
+* [ClusterObjectTemplate](#clusterobjecttemplate)
+* [ClusterPackage](#clusterpackage)
+* [ObjectDeployment](#objectdeployment)
+* [ObjectSet](#objectset)
+* [ObjectSetPhase](#objectsetphase)
+* [ObjectSlice](#objectslice)
+* [ObjectTemplate](#objecttemplate)
+* [Package](#package)
+
 
 ### ClusterObjectDeployment
 
 ClusterObjectDeployment is the Schema for the ClusterObjectDeployments API
+
 
 **Example**
 
@@ -67,6 +68,7 @@ kind: ClusterObjectDeployment
 metadata:
   name: example
 spec:
+  paused: "true"
   revisionHistoryLimit: 10
   selector: metav1.LabelSelector
   template:
@@ -107,15 +109,26 @@ spec:
         - amet
       successDelaySeconds: 42
 status:
-  phase:Pending: null
+  collisionCount: 42
+  conditions:
+  - metav1.Condition
+  controllerOf:
+  - group: elitr
+    kind: sadipscing
+    name: sed
+    namespace: diam
+  revision: 42
+  templateHash: consetetur
 
 ```
+
 
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 | `spec` <br><a href="#clusterobjectdeploymentspec">ClusterObjectDeploymentSpec</a> | ClusterObjectDeploymentSpec defines the desired state of a ClusterObjectDeployment. |
 | `status` <br><a href="#clusterobjectdeploymentstatus">ClusterObjectDeploymentStatus</a> | ClusterObjectDeploymentStatus defines the observed state of a ClusterObjectDeployment. |
+
 
 ### ClusterObjectSet
 
@@ -128,6 +141,7 @@ objects to facilitate the transition between revisions.
 Archived ClusterObjectSets may stay on the cluster, to store information about previous revisions.
 
 A Namespace-scoped version of this API is available as ObjectSet.
+
 
 **Example**
 
@@ -157,27 +171,38 @@ spec:
           app.kubernetes.io/name: example-operator
   lifecycleState: Active
   phases:
-  - class: sadipscing
-    name: consetetur
+  - class: eirmod
+    name: nonumy
     objects:
     - collisionProtection: Prevent
       conditionMappings:
-      - destinationType: sed
-        sourceType: elitr
+      - destinationType: lorem
+        sourceType: tempor
       object:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: example-deployment
     slices:
-    - diam
+    - ipsum
   previous:
   - name: previous-revision
   successDelaySeconds: 42
 status:
-  phase: Pending
+  conditions:
+  - metav1.Condition
+  controllerOf:
+  - group: amet
+    kind: sit
+    name: consetetur
+    namespace: sadipscing
+  remotePhases:
+  - name: dolor
+    uid: types.UID
+  revision: 42
 
 ```
+
 
 | Field | Description |
 | ----- | ----------- |
@@ -185,11 +210,13 @@ status:
 | `spec` <br><a href="#clusterobjectsetspec">ClusterObjectSetSpec</a> | ClusterObjectSetSpec defines the desired state of a ClusterObjectSet. |
 | `status` <br><a href="#clusterobjectsetstatus">ClusterObjectSetStatus</a> | ClusterObjectSetStatus defines the observed state of a ClusterObjectSet. |
 
+
 ### ClusterObjectSetPhase
 
 ClusterObjectSetPhase is an internal API, allowing a ClusterObjectSet to delegate a
 single phase to another custom controller. ClusterObjectSets will create subordinate
 ClusterObjectSetPhases when `.class` is set within the phase specification.
+
 
 **Example**
 
@@ -198,6 +225,342 @@ apiVersion: package-operator.run/v1alpha1
 kind: ClusterObjectSetPhase
 metadata:
   name: example
+spec:
+  availabilityProbes:
+  - probes:
+    - cel:
+        message: Object must be named Hans
+        rule: self.metadata.name == "Hans"
+      condition:
+        status: "True"
+        type: Available
+      fieldsEqual:
+        fieldA: .spec.fieldA
+        fieldB: .status.fieldB
+    selector:
+      kind:
+        group: apps
+        kind: Deployment
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: example-operator
+  objects:
+  - collisionProtection: Prevent
+    conditionMappings:
+    - destinationType: sed
+      sourceType: elitr
+    object:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: example-deployment
+  paused: "true"
+  previous:
+  - name: previous-revision
+  revision: 42
+status:
+  conditions:
+  - status: "True"
+    type: Available
+  controllerOf:
+  - group: nonumy
+    kind: diam
+    name: eirmod
+    namespace: tempor
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#clusterobjectsetphasespec">ClusterObjectSetPhaseSpec</a> | ClusterObjectSetPhaseSpec defines the desired state of a ClusterObjectSetPhase. |
+| `status` <br><a href="#clusterobjectsetphasestatus">ClusterObjectSetPhaseStatus</a> | ClusterObjectSetPhaseStatus defines the observed state of a ClusterObjectSetPhase. |
+
+
+### ClusterObjectSlice
+
+ClusterObjectSlice is referenced by ObjectSets or ObjectDeployments and contain objects to
+limit the size of ObjectSet and ObjectDeployments when big packages are installed.
+This is necessary to work around the etcd object size limit of ~1.5MiB and to reduce load on the kube-apiserver.
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: ClusterObjectSlice
+metadata:
+  name: example
+objects:
+- collisionProtection: Prevent
+  conditionMappings:
+  - destinationType: ipsum
+    sourceType: lorem
+  object:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: example-deployment
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `objects` <b>required</b><br><a href="#objectsetobject">[]ObjectSetObject</a> |  |
+
+
+### ClusterObjectTemplate
+
+ClusterObjectTemplate contain a go template of a Kubernetes manifest. The manifest is then templated with the
+sources provided in the .Spec.Sources. The sources can come from objects from any namespace or cluster scoped
+objects.
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: ClusterObjectTemplate
+metadata:
+  name: example
+spec:
+  sources:
+  - apiVersion: sit
+    items:
+    - destination: sed
+      key: elitr
+    kind: amet
+    name: sadipscing
+    namespace: consetetur
+    optional: "true"
+  template: dolor
+status:
+  conditions:
+  - metav1.Condition
+  controllerOf:
+    group: nonumy
+    kind: diam
+    name: eirmod
+    namespace: tempor
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#objecttemplatespec">ObjectTemplateSpec</a> | ObjectTemplateSpec specification. |
+| `status` <br><a href="#objecttemplatestatus">ObjectTemplateStatus</a> | ObjectTemplateStatus defines the observed state of a ObjectTemplate ie the status of the templated object. |
+
+
+### ClusterPackage
+
+ClusterPackage defines a cluster scoped package installation.
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: ClusterPackage
+metadata:
+  name: example
+spec:
+  component: ipsum
+  config: runtime.RawExtension
+  image: lorem
+  paused: "true"
+status:
+  conditions:
+  - metav1.Condition
+  revision: 42
+  unpackedHash: dolor
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#packagespec">PackageSpec</a> | PackageSpec specifies a package. |
+| `status` <br><a href="#packagestatus">PackageStatus</a> | PackageStatus defines the observed state of a Package. |
+
+
+### ObjectDeployment
+
+ObjectDeployment is the Schema for the ObjectDeployments API
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: ObjectDeployment
+metadata:
+  name: example
+  namespace: default
+spec:
+  paused: "true"
+  revisionHistoryLimit: 10
+  selector: metav1.LabelSelector
+  template:
+    metadata: metav1.ObjectMeta
+    spec:
+      availabilityProbes:
+      - probes:
+        - cel:
+            message: Object must be named Hans
+            rule: self.metadata.name == "Hans"
+          condition:
+            status: "True"
+            type: Available
+          fieldsEqual:
+            fieldA: .spec.fieldA
+            fieldB: .status.fieldB
+        selector:
+          kind:
+            group: apps
+            kind: Deployment
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: example-operator
+      phases:
+      - class: amet
+        name: sit
+        objects:
+        - collisionProtection: Prevent
+          conditionMappings:
+          - destinationType: sadipscing
+            sourceType: consetetur
+          object:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: example-deployment
+        slices:
+        - elitr
+      successDelaySeconds: 42
+status:
+  collisionCount: 42
+  conditions:
+  - metav1.Condition
+  controllerOf:
+  - group: nonumy
+    kind: diam
+    name: eirmod
+    namespace: tempor
+  revision: 42
+  templateHash: sed
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#objectdeploymentspec">ObjectDeploymentSpec</a> | ObjectDeploymentSpec defines the desired state of an ObjectDeployment. |
+| `status` <br><a href="#objectdeploymentstatus">ObjectDeploymentStatus</a> | ObjectDeploymentStatus defines the observed state of an ObjectDeployment. |
+
+
+### ObjectSet
+
+ObjectSet reconciles a collection of objects through ordered phases and aggregates their status.
+
+ObjectSets behave similarly to Kubernetes ReplicaSets, by managing a collection of objects and
+being itself mostly immutable. This object type is able to suspend/pause reconciliation of
+specific objects to facilitate the transition between revisions.
+
+Archived ObjectSets may stay on the cluster, to store information about previous revisions.
+
+A Cluster-scoped version of this API is available as ClusterObjectSet.
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: ObjectSet
+metadata:
+  name: example
+  namespace: default
+spec:
+  availabilityProbes:
+  - probes:
+    - cel:
+        message: Object must be named Hans
+        rule: self.metadata.name == "Hans"
+      condition:
+        status: "True"
+        type: Available
+      fieldsEqual:
+        fieldA: .spec.fieldA
+        fieldB: .status.fieldB
+    selector:
+      kind:
+        group: apps
+        kind: Deployment
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: example-operator
+  lifecycleState: Active
+  phases:
+  - class: ipsum
+    name: lorem
+    objects:
+    - collisionProtection: Prevent
+      conditionMappings:
+      - destinationType: sit
+        sourceType: dolor
+      object:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: example-deployment
+    slices:
+    - amet
+  previous:
+  - name: previous-revision
+  successDelaySeconds: 42
+status:
+  conditions:
+  - metav1.Condition
+  controllerOf:
+  - group: elitr
+    kind: sadipscing
+    name: sed
+    namespace: diam
+  remotePhases:
+  - name: consetetur
+    uid: types.UID
+  revision: 42
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#objectsetspec">ObjectSetSpec</a> | ObjectSetSpec defines the desired state of a ObjectSet. |
+| `status` <br><a href="#objectsetstatus">ObjectSetStatus</a> | ObjectSetStatus defines the observed state of a ObjectSet. |
+
+
+### ObjectSetPhase
+
+ObjectSetPhase is an internal API, allowing an ObjectSet to delegate a single phase to another custom controller.
+ObjectSets will create subordinate ObjectSetPhases when `.class` within the phase specification is set.
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: ObjectSetPhase
+metadata:
+  name: example
+  namespace: default
 spec:
   availabilityProbes:
   - probes:
@@ -243,25 +606,29 @@ status:
 
 ```
 
+
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
-| `spec` <br><a href="#clusterobjectsetphasespec">ClusterObjectSetPhaseSpec</a> | ClusterObjectSetPhaseSpec defines the desired state of a ClusterObjectSetPhase. |
-| `status` <br><a href="#clusterobjectsetphasestatus">ClusterObjectSetPhaseStatus</a> | ClusterObjectSetPhaseStatus defines the observed state of a ClusterObjectSetPhase. |
+| `spec` <br><a href="#objectsetphasespec">ObjectSetPhaseSpec</a> | ObjectSetPhaseSpec defines the desired state of a ObjectSetPhase. |
+| `status` <br><a href="#objectsetphasestatus">ObjectSetPhaseStatus</a> | ObjectSetPhaseStatus defines the observed state of a ObjectSetPhase. |
 
-### ClusterObjectSlice
 
-ClusterObjectSlice is referenced by ObjectSets or ObjectDeployments and contain objects to
-limit the size of ObjectSet and ObjectDeployments when big packages are installed.
+### ObjectSlice
+
+ObjectSlice is referenced by ObjectSets or ObjectDeployments and contain objects to
+limit the size of ObjectSets and ObjectDeployments when big packages are installed.
 This is necessary to work around the etcd object size limit of ~1.5MiB and to reduce load on the kube-apiserver.
+
 
 **Example**
 
 ```yaml
 apiVersion: package-operator.run/v1alpha1
-kind: ClusterObjectSlice
+kind: ObjectSlice
 metadata:
   name: example
+  namespace: default
 objects:
 - collisionProtection: Prevent
   conditionMappings:
@@ -275,24 +642,28 @@ objects:
 
 ```
 
+
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 | `objects` <b>required</b><br><a href="#objectsetobject">[]ObjectSetObject</a> |  |
 
-### ClusterObjectTemplate
 
-ClusterObjectTemplate contain a go template of a Kubernetes manifest. The manifest is then templated with the
-sources provided in the .Spec.Sources. The sources can come from objects from any namespace or cluster scoped
-objects.
+### ObjectTemplate
+
+ObjectTemplate contain a go template of a Kubernetes manifest. This manifest is then templated with the
+sources provided in the .Spec.Sources. The sources can only come from objects within the same nampespace
+as the ObjectTemplate.
+
 
 **Example**
 
 ```yaml
 apiVersion: package-operator.run/v1alpha1
-kind: ClusterObjectTemplate
+kind: ObjectTemplate
 metadata:
   name: example
+  namespace: default
 spec:
   sources:
   - apiVersion: sadipscing
@@ -312,9 +683,9 @@ status:
     kind: tempor
     name: ipsum
     namespace: dolor
-  phase: ObjectTemplateStatusPhase
 
 ```
+
 
 | Field | Description |
 | ----- | ----------- |
@@ -322,306 +693,11 @@ status:
 | `spec` <br><a href="#objecttemplatespec">ObjectTemplateSpec</a> | ObjectTemplateSpec specification. |
 | `status` <br><a href="#objecttemplatestatus">ObjectTemplateStatus</a> | ObjectTemplateStatus defines the observed state of a ObjectTemplate ie the status of the templated object. |
 
-### ClusterPackage
-
-ClusterPackage defines a cluster scoped package installation.
-
-**Example**
-
-```yaml
-apiVersion: package-operator.run/v1alpha1
-kind: ClusterPackage
-metadata:
-  name: example
-spec:
-  component: amet
-  config: runtime.RawExtension
-  image: sit
-status:
-  phase: Pending
-
-```
-
-| Field | Description |
-| ----- | ----------- |
-| `metadata` <br>metav1.ObjectMeta |  |
-| `spec` <br><a href="#packagespec">PackageSpec</a> | PackageSpec specifies a package. |
-| `status` <br><a href="#packagestatus">PackageStatus</a> | PackageStatus defines the observed state of a Package. |
-
-### ObjectDeployment
-
-ObjectDeployment is the Schema for the ObjectDeployments API
-
-**Example**
-
-```yaml
-apiVersion: package-operator.run/v1alpha1
-kind: ObjectDeployment
-metadata:
-  name: example
-  namespace: default
-spec:
-  revisionHistoryLimit: 10
-  selector: metav1.LabelSelector
-  template:
-    metadata: metav1.ObjectMeta
-    spec:
-      availabilityProbes:
-      - probes:
-        - cel:
-            message: Object must be named Hans
-            rule: self.metadata.name == "Hans"
-          condition:
-            status: "True"
-            type: Available
-          fieldsEqual:
-            fieldA: .spec.fieldA
-            fieldB: .status.fieldB
-        selector:
-          kind:
-            group: apps
-            kind: Deployment
-          selector:
-            matchLabels:
-              app.kubernetes.io/name: example-operator
-      phases:
-      - class: sadipscing
-        name: consetetur
-        objects:
-        - collisionProtection: Prevent
-          conditionMappings:
-          - destinationType: sed
-            sourceType: elitr
-          object:
-            apiVersion: apps/v1
-            kind: Deployment
-            metadata:
-              name: example-deployment
-        slices:
-        - diam
-      successDelaySeconds: 42
-status:
-  phase:Pending: null
-
-```
-
-| Field | Description |
-| ----- | ----------- |
-| `metadata` <br>metav1.ObjectMeta |  |
-| `spec` <br><a href="#objectdeploymentspec">ObjectDeploymentSpec</a> | ObjectDeploymentSpec defines the desired state of an ObjectDeployment. |
-| `status` <br><a href="#objectdeploymentstatus">ObjectDeploymentStatus</a> | ObjectDeploymentStatus defines the observed state of an ObjectDeployment. |
-
-### ObjectSet
-
-ObjectSet reconciles a collection of objects through ordered phases and aggregates their status.
-
-ObjectSets behave similarly to Kubernetes ReplicaSets, by managing a collection of objects and
-being itself mostly immutable. This object type is able to suspend/pause reconciliation of
-specific objects to facilitate the transition between revisions.
-
-Archived ObjectSets may stay on the cluster, to store information about previous revisions.
-
-A Cluster-scoped version of this API is available as ClusterObjectSet.
-
-**Example**
-
-```yaml
-apiVersion: package-operator.run/v1alpha1
-kind: ObjectSet
-metadata:
-  name: example
-  namespace: default
-spec:
-  availabilityProbes:
-  - probes:
-    - cel:
-        message: Object must be named Hans
-        rule: self.metadata.name == "Hans"
-      condition:
-        status: "True"
-        type: Available
-      fieldsEqual:
-        fieldA: .spec.fieldA
-        fieldB: .status.fieldB
-    selector:
-      kind:
-        group: apps
-        kind: Deployment
-      selector:
-        matchLabels:
-          app.kubernetes.io/name: example-operator
-  lifecycleState: Active
-  phases:
-  - class: eirmod
-    name: nonumy
-    objects:
-    - collisionProtection: Prevent
-      conditionMappings:
-      - destinationType: lorem
-        sourceType: tempor
-      object:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: example-deployment
-    slices:
-    - ipsum
-  previous:
-  - name: previous-revision
-  successDelaySeconds: 42
-status:
-  phase: Pending
-
-```
-
-| Field | Description |
-| ----- | ----------- |
-| `metadata` <br>metav1.ObjectMeta |  |
-| `spec` <br><a href="#objectsetspec">ObjectSetSpec</a> | ObjectSetSpec defines the desired state of a ObjectSet. |
-| `status` <br><a href="#objectsetstatus">ObjectSetStatus</a> | ObjectSetStatus defines the observed state of a ObjectSet. |
-
-### ObjectSetPhase
-
-ObjectSetPhase is an internal API, allowing an ObjectSet to delegate a single phase to another custom controller.
-ObjectSets will create subordinate ObjectSetPhases when `.class` within the phase specification is set.
-
-**Example**
-
-```yaml
-apiVersion: package-operator.run/v1alpha1
-kind: ObjectSetPhase
-metadata:
-  name: example
-  namespace: default
-spec:
-  availabilityProbes:
-  - probes:
-    - cel:
-        message: Object must be named Hans
-        rule: self.metadata.name == "Hans"
-      condition:
-        status: "True"
-        type: Available
-      fieldsEqual:
-        fieldA: .spec.fieldA
-        fieldB: .status.fieldB
-    selector:
-      kind:
-        group: apps
-        kind: Deployment
-      selector:
-        matchLabels:
-          app.kubernetes.io/name: example-operator
-  objects:
-  - collisionProtection: Prevent
-    conditionMappings:
-    - destinationType: sit
-      sourceType: dolor
-    object:
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: example-deployment
-  paused: "true"
-  previous:
-  - name: previous-revision
-  revision: 42
-status:
-  conditions:
-  - status: "True"
-    type: Available
-  controllerOf:
-  - group: consetetur
-    kind: amet
-    name: sadipscing
-    namespace: elitr
-
-```
-
-| Field | Description |
-| ----- | ----------- |
-| `metadata` <br>metav1.ObjectMeta |  |
-| `spec` <br><a href="#objectsetphasespec">ObjectSetPhaseSpec</a> | ObjectSetPhaseSpec defines the desired state of a ObjectSetPhase. |
-| `status` <br><a href="#objectsetphasestatus">ObjectSetPhaseStatus</a> | ObjectSetPhaseStatus defines the observed state of a ObjectSetPhase. |
-
-### ObjectSlice
-
-ObjectSlice is referenced by ObjectSets or ObjectDeployments and contain objects to
-limit the size of ObjectSets and ObjectDeployments when big packages are installed.
-This is necessary to work around the etcd object size limit of ~1.5MiB and to reduce load on the kube-apiserver.
-
-**Example**
-
-```yaml
-apiVersion: package-operator.run/v1alpha1
-kind: ObjectSlice
-metadata:
-  name: example
-  namespace: default
-objects:
-- collisionProtection: Prevent
-  conditionMappings:
-  - destinationType: diam
-    sourceType: sed
-  object:
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: example-deployment
-
-```
-
-| Field | Description |
-| ----- | ----------- |
-| `metadata` <br>metav1.ObjectMeta |  |
-| `objects` <b>required</b><br><a href="#objectsetobject">[]ObjectSetObject</a> |  |
-
-### ObjectTemplate
-
-ObjectTemplate contain a go template of a Kubernetes manifest. This manifest is then templated with the
-sources provided in the .Spec.Sources. The sources can only come from objects within the same nampespace
-as the ObjectTemplate.
-
-**Example**
-
-```yaml
-apiVersion: package-operator.run/v1alpha1
-kind: ObjectTemplate
-metadata:
-  name: example
-  namespace: default
-spec:
-  sources:
-  - apiVersion: eirmod
-    items:
-    - destination: sit
-      key: dolor
-    kind: tempor
-    name: ipsum
-    namespace: lorem
-    optional: "true"
-  template: nonumy
-status:
-  conditions:
-  - metav1.Condition
-  controllerOf:
-    group: consetetur
-    kind: amet
-    name: sadipscing
-    namespace: elitr
-  phase: ObjectTemplateStatusPhase
-
-```
-
-| Field | Description |
-| ----- | ----------- |
-| `metadata` <br>metav1.ObjectMeta |  |
-| `spec` <br><a href="#objecttemplatespec">ObjectTemplateSpec</a> | ObjectTemplateSpec specification. |
-| `status` <br><a href="#objecttemplatestatus">ObjectTemplateStatus</a> | ObjectTemplateStatus defines the observed state of a ObjectTemplate ie the status of the templated object. |
 
 ### Package
 
 Package defines a namespaced package installationn.
+
 
 **Example**
 
@@ -632,19 +708,27 @@ metadata:
   name: example
   namespace: default
 spec:
-  component: diam
+  component: amet
   config: runtime.RawExtension
-  image: sed
+  image: sit
+  paused: "true"
 status:
-  phase: Pending
+  conditions:
+  - metav1.Condition
+  revision: 42
+  unpackedHash: consetetur
 
 ```
+
 
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 | `spec` <br><a href="#packagespec">PackageSpec</a> | PackageSpec specifies a package. |
 | `status` <br><a href="#packagestatus">PackageStatus</a> | PackageStatus defines the observed state of a Package. |
+
+
+
 
 ---
 
@@ -657,10 +741,12 @@ ClusterObjectDeploymentSpec defines the desired state of a ClusterObjectDeployme
 | `revisionHistoryLimit` <br><a href="#int32">int32</a> | Number of old revisions in the form of archived ObjectSets to keep. |
 | `selector` <b>required</b><br>metav1.LabelSelector | Selector targets ObjectSets managed by this Deployment. |
 | `template` <b>required</b><br><a href="#objectsettemplate">ObjectSetTemplate</a> | Template to create new ObjectSets from. |
+| `paused` <br><a href="#bool">bool</a> | If Paused is true, the object and its children will not be reconciled. |
+
 
 Used in:
+* [ClusterObjectDeployment](#clusterobjectdeployment)
 
-- [ClusterObjectDeployment](#clusterobjectdeployment)
 
 ### ClusterObjectDeploymentStatus
 
@@ -669,15 +755,15 @@ ClusterObjectDeploymentStatus defines the observed state of a ClusterObjectDeplo
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `phase` <br><a href="#objectdeploymentphase">ObjectDeploymentPhase</a> | This field is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
 | `collisionCount` <br><a href="#int32">int32</a> | Count of hash collisions of the ClusterObjectDeployment. |
 | `templateHash` <br>string | Computed TemplateHash. |
 | `revision` <br>int64 | Deployment revision. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | ControllerOf references the owned ClusterObjectSet revisions. |
 
-Used in:
 
-- [ClusterObjectDeployment](#clusterobjectdeployment)
+Used in:
+* [ClusterObjectDeployment](#clusterobjectdeployment)
+
 
 ### ClusterObjectSetPhaseSpec
 
@@ -691,9 +777,10 @@ ClusterObjectSetPhaseSpec defines the desired state of a ClusterObjectSetPhase.
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `objects` <b>required</b><br><a href="#objectsetobject">[]ObjectSetObject</a> | Objects belonging to this phase. |
 
-Used in:
 
-- [ClusterObjectSetPhase](#clusterobjectsetphase)
+Used in:
+* [ClusterObjectSetPhase](#clusterobjectsetphase)
+
 
 ### ClusterObjectSetPhaseStatus
 
@@ -704,9 +791,10 @@ ClusterObjectSetPhaseStatus defines the observed state of a ClusterObjectSetPhas
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | References all objects controlled by this instance. |
 
-Used in:
 
-- [ClusterObjectSetPhase](#clusterobjectsetphase)
+Used in:
+* [ClusterObjectSetPhase](#clusterobjectsetphase)
+
 
 ### ClusterObjectSetSpec
 
@@ -720,9 +808,10 @@ ClusterObjectSetSpec defines the desired state of a ClusterObjectSet.
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `successDelaySeconds` <br><a href="#int32">int32</a> | Success Delay Seconds applies a wait period from the time an<br>Object Set is available to the time it is marked as successful.<br>This can be used to prevent false reporting of success when<br>the underlying objects may initially satisfy the availability<br>probes, but are ultimately unstable. |
 
-Used in:
 
-- [ClusterObjectSet](#clusterobjectset)
+Used in:
+* [ClusterObjectSet](#clusterobjectset)
+
 
 ### ClusterObjectSetStatus
 
@@ -731,14 +820,14 @@ ClusterObjectSetStatus defines the observed state of a ClusterObjectSet.
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `phase` <br><a href="#objectsetstatusphase">ObjectSetStatusPhase</a> | Phase is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
 | `revision` <br>int64 | Computed revision number, monotonically increasing. |
 | `remotePhases` <br><a href="#remotephasereference">[]RemotePhaseReference</a> | Remote phases aka ClusterObjectSetPhase objects. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | References all objects controlled by this instance. |
 
-Used in:
 
-- [ClusterObjectSet](#clusterobjectset)
+Used in:
+* [ClusterObjectSet](#clusterobjectset)
+
 
 ### ConditionMapping
 
@@ -749,9 +838,10 @@ ConditionMapping maps one condition type to another.
 | `sourceType` <b>required</b><br>string | Source condition type. |
 | `destinationType` <b>required</b><br>string | Destination condition type to report into Package Operator APIs. |
 
-Used in:
 
-- [ObjectSetObject](#objectsetobject)
+Used in:
+* [ObjectSetObject](#objectsetobject)
+
 
 ### ControlledObjectReference
 
@@ -764,15 +854,16 @@ ControlledObjectReference an object controlled by this object.
 | `name` <b>required</b><br>string | Object Name. |
 | `namespace` <br>string | Object Namespace. |
 
-Used in:
 
-- [ClusterObjectDeploymentStatus](#clusterobjectdeploymentstatus)
-- [ClusterObjectSetPhaseStatus](#clusterobjectsetphasestatus)
-- [ClusterObjectSetStatus](#clusterobjectsetstatus)
-- [ObjectDeploymentStatus](#objectdeploymentstatus)
-- [ObjectSetPhaseStatus](#objectsetphasestatus)
-- [ObjectSetStatus](#objectsetstatus)
-- [ObjectTemplateStatus](#objecttemplatestatus)
+Used in:
+* [ClusterObjectDeploymentStatus](#clusterobjectdeploymentstatus)
+* [ClusterObjectSetPhaseStatus](#clusterobjectsetphasestatus)
+* [ClusterObjectSetStatus](#clusterobjectsetstatus)
+* [ObjectDeploymentStatus](#objectdeploymentstatus)
+* [ObjectSetPhaseStatus](#objectsetphasestatus)
+* [ObjectSetStatus](#objectsetstatus)
+* [ObjectTemplateStatus](#objecttemplatestatus)
+
 
 ### ObjectDeploymentSpec
 
@@ -783,10 +874,12 @@ ObjectDeploymentSpec defines the desired state of an ObjectDeployment.
 | `revisionHistoryLimit` <br><a href="#int32">int32</a> | Number of old revisions in the form of archived ObjectSets to keep. |
 | `selector` <b>required</b><br>metav1.LabelSelector | Selector targets ObjectSets managed by this Deployment. |
 | `template` <b>required</b><br><a href="#objectsettemplate">ObjectSetTemplate</a> | Template to create new ObjectSets from. |
+| `paused` <br><a href="#bool">bool</a> | If Paused is true, the object and its children will not be reconciled. |
+
 
 Used in:
+* [ObjectDeployment](#objectdeployment)
 
-- [ObjectDeployment](#objectdeployment)
 
 ### ObjectDeploymentStatus
 
@@ -795,15 +888,15 @@ ObjectDeploymentStatus defines the observed state of an ObjectDeployment.
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `phase` <br><a href="#objectdeploymentphase">ObjectDeploymentPhase</a> | This field is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
 | `collisionCount` <br><a href="#int32">int32</a> | Count of hash collisions of the ObjectDeployment. |
 | `templateHash` <br>string | Computed TemplateHash. |
 | `revision` <br>int64 | Deployment revision. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | ControllerOf references the owned ObjectSet revisions. |
 
-Used in:
 
-- [ObjectDeployment](#objectdeployment)
+Used in:
+* [ObjectDeployment](#objectdeployment)
+
 
 ### ObjectSetObject
 
@@ -815,13 +908,14 @@ ObjectSetObject is an object that is part of the phase of an ObjectSet.
 | `collisionProtection` <br><a href="#collisionprotection">CollisionProtection</a> | Collision protection prevents Package Operator from working on objects already under<br>management by a different operator. |
 | `conditionMappings` <br><a href="#conditionmapping">[]ConditionMapping</a> | Maps conditions from this object into the Package Operator APIs. |
 
-Used in:
 
-- [ClusterObjectSetPhaseSpec](#clusterobjectsetphasespec)
-- [ObjectSetPhaseSpec](#objectsetphasespec)
-- [ObjectSetTemplatePhase](#objectsettemplatephase)
-- [ClusterObjectSlice](#clusterobjectslice)
-- [ObjectSlice](#objectslice)
+Used in:
+* [ClusterObjectSetPhaseSpec](#clusterobjectsetphasespec)
+* [ObjectSetPhaseSpec](#objectsetphasespec)
+* [ObjectSetTemplatePhase](#objectsettemplatephase)
+* [ClusterObjectSlice](#clusterobjectslice)
+* [ObjectSlice](#objectslice)
+
 
 ### ObjectSetPhaseSpec
 
@@ -835,9 +929,10 @@ ObjectSetPhaseSpec defines the desired state of a ObjectSetPhase.
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `objects` <b>required</b><br><a href="#objectsetobject">[]ObjectSetObject</a> | Objects belonging to this phase. |
 
-Used in:
 
-- [ObjectSetPhase](#objectsetphase)
+Used in:
+* [ObjectSetPhase](#objectsetphase)
+
 
 ### ObjectSetPhaseStatus
 
@@ -848,9 +943,10 @@ ObjectSetPhaseStatus defines the observed state of a ObjectSetPhase.
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | References all objects controlled by this instance. |
 
-Used in:
 
-- [ObjectSetPhase](#objectsetphase)
+Used in:
+* [ObjectSetPhase](#objectsetphase)
+
 
 ### ObjectSetProbe
 
@@ -861,13 +957,14 @@ ObjectSetProbe define how ObjectSets check their children for their status.
 | `probes` <b>required</b><br><a href="#probe">[]Probe</a> | Probe configuration parameters. |
 | `selector` <b>required</b><br><a href="#probeselector">ProbeSelector</a> | Selector specifies which objects this probe should target. |
 
-Used in:
 
-- [ClusterObjectSetPhaseSpec](#clusterobjectsetphasespec)
-- [ClusterObjectSetSpec](#clusterobjectsetspec)
-- [ObjectSetPhaseSpec](#objectsetphasespec)
-- [ObjectSetSpec](#objectsetspec)
-- [ObjectSetTemplateSpec](#objectsettemplatespec)
+Used in:
+* [ClusterObjectSetPhaseSpec](#clusterobjectsetphasespec)
+* [ClusterObjectSetSpec](#clusterobjectsetspec)
+* [ObjectSetPhaseSpec](#objectsetphasespec)
+* [ObjectSetSpec](#objectsetspec)
+* [ObjectSetTemplateSpec](#objectsettemplatespec)
+
 
 ### ObjectSetSpec
 
@@ -881,9 +978,10 @@ ObjectSetSpec defines the desired state of a ObjectSet.
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `successDelaySeconds` <br><a href="#int32">int32</a> | Success Delay Seconds applies a wait period from the time an<br>Object Set is available to the time it is marked as successful.<br>This can be used to prevent false reporting of success when<br>the underlying objects may initially satisfy the availability<br>probes, but are ultimately unstable. |
 
-Used in:
 
-- [ObjectSet](#objectset)
+Used in:
+* [ObjectSet](#objectset)
+
 
 ### ObjectSetStatus
 
@@ -892,14 +990,14 @@ ObjectSetStatus defines the observed state of a ObjectSet.
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `phase` <br><a href="#objectsetstatusphase">ObjectSetStatusPhase</a> | Phase is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
 | `revision` <br>int64 | Computed revision number, monotonically increasing. |
 | `remotePhases` <br><a href="#remotephasereference">[]RemotePhaseReference</a> | Remote phases aka ObjectSetPhase objects. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | References all objects controlled by this instance. |
 
-Used in:
 
-- [ObjectSet](#objectset)
+Used in:
+* [ObjectSet](#objectset)
+
 
 ### ObjectSetTemplate
 
@@ -910,10 +1008,11 @@ ObjectSetTemplate describes the template to create new ObjectSets from.
 | `metadata` <b>required</b><br>metav1.ObjectMeta | Common Object Metadata. |
 | `spec` <b>required</b><br><a href="#objectsettemplatespec">ObjectSetTemplateSpec</a> | ObjectSet specification. |
 
-Used in:
 
-- [ClusterObjectDeploymentSpec](#clusterobjectdeploymentspec)
-- [ObjectDeploymentSpec](#objectdeploymentspec)
+Used in:
+* [ClusterObjectDeploymentSpec](#clusterobjectdeploymentspec)
+* [ObjectDeploymentSpec](#objectdeploymentspec)
+
 
 ### ObjectSetTemplatePhase
 
@@ -926,11 +1025,12 @@ ObjectSetTemplatePhase configures the reconcile phase of ObjectSets.
 | `objects` <br><a href="#objectsetobject">[]ObjectSetObject</a> | Objects belonging to this phase. |
 | `slices` <br>[]string | References to ObjectSlices containing objects for this phase. |
 
-Used in:
 
-- [ClusterObjectSetSpec](#clusterobjectsetspec)
-- [ObjectSetSpec](#objectsetspec)
-- [ObjectSetTemplateSpec](#objectsettemplatespec)
+Used in:
+* [ClusterObjectSetSpec](#clusterobjectsetspec)
+* [ObjectSetSpec](#objectsetspec)
+* [ObjectSetTemplateSpec](#objectsettemplatespec)
+
 
 ### ObjectSetTemplateSpec
 
@@ -944,9 +1044,10 @@ also update validation rules in (Cluster)ObjectSetSpec.
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `successDelaySeconds` <br><a href="#int32">int32</a> | Success Delay Seconds applies a wait period from the time an<br>Object Set is available to the time it is marked as successful.<br>This can be used to prevent false reporting of success when<br>the underlying objects may initially satisfy the availability<br>probes, but are ultimately unstable. |
 
-Used in:
 
-- [ObjectSetTemplate](#objectsettemplate)
+Used in:
+* [ObjectSetTemplate](#objectsettemplate)
+
 
 ### ObjectTemplateSource
 
@@ -961,9 +1062,10 @@ ObjectTemplateSource defines a source for a template.
 | `items` <b>required</b><br><a href="#objecttemplatesourceitem">[]ObjectTemplateSourceItem</a> |  |
 | `optional` <br><a href="#bool">bool</a> | Marks this source as optional.<br>The templated object will still be applied if optional sources are not found.<br>If the source object is created later on, it will be eventually picked up. |
 
-Used in:
 
-- [ObjectTemplateSpec](#objecttemplatespec)
+Used in:
+* [ObjectTemplateSpec](#objecttemplatespec)
+
 
 ### ObjectTemplateSourceItem
 
@@ -974,9 +1076,10 @@ ObjectTemplateSourceItem defines a source item for an object template.
 | `key` <b>required</b><br>string | JSONPath to value in source object. |
 | `destination` <b>required</b><br>string | JSONPath to destination in which to store copy of the source value. |
 
-Used in:
 
-- [ObjectTemplateSource](#objecttemplatesource)
+Used in:
+* [ObjectTemplateSource](#objecttemplatesource)
+
 
 ### ObjectTemplateSpec
 
@@ -987,10 +1090,11 @@ ObjectTemplateSpec specification.
 | `template` <b>required</b><br>string | Go template of a Kubernetes manifest |
 | `sources` <b>required</b><br><a href="#objecttemplatesource">[]ObjectTemplateSource</a> | Objects in which configuration parameters are fetched |
 
-Used in:
 
-- [ClusterObjectTemplate](#clusterobjecttemplate)
-- [ObjectTemplate](#objecttemplate)
+Used in:
+* [ClusterObjectTemplate](#clusterobjecttemplate)
+* [ObjectTemplate](#objecttemplate)
+
 
 ### ObjectTemplateStatus
 
@@ -1000,12 +1104,12 @@ ObjectTemplateStatus defines the observed state of a ObjectTemplate ie the statu
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions the templated object is in. |
 | `controllerOf` <br><a href="#controlledobjectreference">ControlledObjectReference</a> | ControllerOf references the templated object. |
-| `phase` <br><a href="#objecttemplatestatusphase">ObjectTemplateStatusPhase</a> | This field is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
+
 
 Used in:
+* [ClusterObjectTemplate](#clusterobjecttemplate)
+* [ObjectTemplate](#objecttemplate)
 
-- [ClusterObjectTemplate](#clusterobjecttemplate)
-- [ObjectTemplate](#objecttemplate)
 
 ### PackageProbeKindSpec
 
@@ -1017,9 +1121,10 @@ selects objects based on Kind and API Group.
 | `group` <b>required</b><br>string | Object Group to apply a probe to. |
 | `kind` <b>required</b><br>string | Object Kind to apply a probe to. |
 
-Used in:
 
-- [ProbeSelector](#probeselector)
+Used in:
+* [ProbeSelector](#probeselector)
+
 
 ### PackageSpec
 
@@ -1030,11 +1135,13 @@ PackageSpec specifies a package.
 | `image` <b>required</b><br>string | the image containing the contents of the package<br>this image will be unpacked by the package-loader to render<br>the ObjectDeployment for propagating the installation of the package. |
 | `config` <br>runtime.RawExtension | Package configuration parameters. |
 | `component` <br>string | Desired component to deploy from multi-component packages. |
+| `paused` <br><a href="#bool">bool</a> | If Paused is true, the package and its children will not be reconciled. |
+
 
 Used in:
+* [ClusterPackage](#clusterpackage)
+* [Package](#package)
 
-- [ClusterPackage](#clusterpackage)
-- [Package](#package)
 
 ### PackageStatus
 
@@ -1043,14 +1150,14 @@ PackageStatus defines the observed state of a Package.
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `phase` <br><a href="#packagestatusphase">PackageStatusPhase</a> | This field is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
 | `unpackedHash` <br>string | Hash of image + config that was successfully unpacked. |
 | `revision` <br>int64 | Package revision as reported by the ObjectDeployment. |
 
-Used in:
 
-- [ClusterPackage](#clusterpackage)
-- [Package](#package)
+Used in:
+* [ClusterPackage](#clusterpackage)
+* [Package](#package)
+
 
 ### PreviousRevisionReference
 
@@ -1060,12 +1167,13 @@ PreviousRevisionReference references a previous revision of an ObjectSet or Clus
 | ----- | ----------- |
 | `name` <b>required</b><br>string | Name of a previous revision. |
 
-Used in:
 
-- [ClusterObjectSetPhaseSpec](#clusterobjectsetphasespec)
-- [ClusterObjectSetSpec](#clusterobjectsetspec)
-- [ObjectSetPhaseSpec](#objectsetphasespec)
-- [ObjectSetSpec](#objectsetspec)
+Used in:
+* [ClusterObjectSetPhaseSpec](#clusterobjectsetphasespec)
+* [ClusterObjectSetSpec](#clusterobjectsetspec)
+* [ObjectSetPhaseSpec](#objectsetphasespec)
+* [ObjectSetSpec](#objectsetspec)
+
 
 ### Probe
 
@@ -1075,28 +1183,30 @@ Probe defines probe parameters. Only one can be filled.
 | ----- | ----------- |
 | `condition` <br><a href="#probeconditionspec">ProbeConditionSpec</a> | ProbeConditionSpec checks whether or not the object reports a condition with given type and status. |
 | `fieldsEqual` <br><a href="#probefieldsequalspec">ProbeFieldsEqualSpec</a> | ProbeFieldsEqualSpec compares two fields specified by JSON Paths. |
-| `cel` <br><a href="#probecelspec">ProbeCELSpec</a> | ProbeCELSpec uses Common Expression Language (CEL) to probe an object.<br>CEL rules have to evaluate to a boolean to be valid.<br>See:<br><https://kubernetes.io/docs/reference/using-api/cel><br><https://github.com/google/cel-go> |
+| `cel` <br><a href="#probecelspec">ProbeCELSpec</a> | ProbeCELSpec uses Common Expression Language (CEL) to probe an object.<br>CEL rules have to evaluate to a boolean to be valid.<br>See:<br>https://kubernetes.io/docs/reference/using-api/cel<br>https://github.com/google/cel-go |
+
 
 Used in:
+* [ObjectSetProbe](#objectsetprobe)
 
-- [ObjectSetProbe](#objectsetprobe)
 
 ### ProbeCELSpec
 
 ProbeCELSpec uses Common Expression Language (CEL) to probe an object.
 CEL rules have to evaluate to a boolean to be valid.
 See:
-<https://kubernetes.io/docs/reference/using-api/cel>
-<https://github.com/google/cel-go>
+https://kubernetes.io/docs/reference/using-api/cel
+https://github.com/google/cel-go
 
 | Field | Description |
 | ----- | ----------- |
 | `rule` <b>required</b><br>string | CEL rule to evaluate. |
 | `message` <b>required</b><br>string | Error message to output if rule evaluates to false. |
 
-Used in:
 
-- [Probe](#probe)
+Used in:
+* [Probe](#probe)
+
 
 ### ProbeConditionSpec
 
@@ -1107,9 +1217,10 @@ ProbeConditionSpec checks whether or not the object reports a condition with giv
 | `type` <b>required</b><br>string | Condition type to probe for. |
 | `status` <b>required</b><br>string | Condition status to probe for. |
 
-Used in:
 
-- [Probe](#probe)
+Used in:
+* [Probe](#probe)
+
 
 ### ProbeFieldsEqualSpec
 
@@ -1120,9 +1231,10 @@ ProbeFieldsEqualSpec compares two fields specified by JSON Paths.
 | `fieldA` <b>required</b><br>string | First field for comparison. |
 | `fieldB` <b>required</b><br>string | Second field for comparison. |
 
-Used in:
 
-- [Probe](#probe)
+Used in:
+* [Probe](#probe)
+
 
 ### ProbeSelector
 
@@ -1134,9 +1246,10 @@ e.g. ensures that probes defined for apps/Deployments are not checked against Co
 | `kind` <b>required</b><br><a href="#packageprobekindspec">PackageProbeKindSpec</a> | Kind and API Group of the object to probe. |
 | `selector` <br>metav1.LabelSelector | Further sub-selects objects based on a Label Selector. |
 
-Used in:
 
-- [ObjectSetProbe](#objectsetprobe)
+Used in:
+* [ObjectSetProbe](#objectsetprobe)
+
 
 ### RemotePhaseReference
 
@@ -1147,24 +1260,25 @@ RemotePhaseReference remote phases aka ObjectSetPhase/ClusterObjectSetPhase obje
 | `name` <b>required</b><br>string |  |
 | `uid` <b>required</b><br>types.UID |  |
 
+
 Used in:
-
-- [ClusterObjectSetStatus](#clusterobjectsetstatus)
-- [ObjectSetStatus](#objectsetstatus)
-
+* [ClusterObjectSetStatus](#clusterobjectsetstatus)
+* [ObjectSetStatus](#objectsetstatus)
 ## manifests.package-operator.run/v1alpha1
 
 Package v1alpha1 contains API Schema definitions for the v1alpha1 version of the manifests API group,
 containing file-based manifests for the packaging infrastructure.
 
-- [PackageManifest](#packagemanifest)
-- [PackageManifestLock](#packagemanifestlock)
-- [Repository](#repository)
-- [RepositoryEntry](#repositoryentry)
+* [PackageManifest](#packagemanifest)
+* [PackageManifestLock](#packagemanifestlock)
+* [Repository](#repository)
+* [RepositoryEntry](#repositoryentry)
+
 
 ### PackageManifest
 
 PackageManifest defines the manifest of a package.
+
 
 **Example**
 
@@ -1249,15 +1363,18 @@ test:
 
 ```
 
+
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 | `spec` <br><a href="#packagemanifestspec">PackageManifestSpec</a> | PackageManifestSpec represents the spec of the packagemanifest containing the<br>details about phases and availability probes. |
 | `test` <br><a href="#packagemanifesttest">PackageManifestTest</a> | PackageManifestTest configures test cases. |
 
+
 ### PackageManifestLock
 
 PackageManifestLock allows locking packages to specific versions.
+
 
 **Example**
 
@@ -1280,14 +1397,17 @@ spec:
 
 ```
 
+
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 | `spec` <br><a href="#packagemanifestlockspec">PackageManifestLockSpec</a> | PackageManifestLockSpec defines a set of packages that are locked to a specific version. |
 
+
 ### Repository
 
 Repository is the k8s resource that represents a package repository.
+
 
 **Example**
 
@@ -1300,13 +1420,16 @@ metadata:
 
 ```
 
+
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 
+
 ### RepositoryEntry
 
 RepositoryEntry contains metadata on one image belonging to the repository.
+
 
 **Example**
 
@@ -1332,10 +1455,14 @@ metadata:
 
 ```
 
+
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <br>metav1.ObjectMeta |  |
 | `data` <b>required</b><br><a href="#repositoryentrydata">RepositoryEntryData</a> | RepositoryEntryData is the part of RepositoryEntry containing the actual data. |
+
+
+
 
 ---
 
@@ -1347,41 +1474,44 @@ PackageEnvironment information.
 | ----- | ----------- |
 | `kubernetes` <b>required</b><br><a href="#packageenvironmentkubernetes">PackageEnvironmentKubernetes</a> | Kubernetes environment information. This section is always set. |
 | `openShift` <br><a href="#packageenvironmentopenshift">PackageEnvironmentOpenShift</a> | OpenShift environment information. This section is only set when OpenShift is detected. |
-| `proxy` <br><a href="#packageenvironmentproxy">PackageEnvironmentProxy</a> | Proxy configuration. Only available on OpenShift when the cluster-wide Proxy is enabled.<br><https://docs.openshift.com/container-platform/latest/networking/enable-cluster-wide-proxy.html> |
-| `hyperShift` <br><a href="#packageenvironmenthypershift">PackageEnvironmentHyperShift</a> | HyperShift specific information. Only available when installed alongside HyperShift.<br><https://github.com/openshift/hypershift> |
+| `proxy` <br><a href="#packageenvironmentproxy">PackageEnvironmentProxy</a> | Proxy configuration. Only available on OpenShift when the cluster-wide Proxy is enabled.<br>https://docs.openshift.com/container-platform/latest/networking/enable-cluster-wide-proxy.html |
+| `hyperShift` <br><a href="#packageenvironmenthypershift">PackageEnvironmentHyperShift</a> | HyperShift specific information. Only available when installed alongside HyperShift.<br>https://github.com/openshift/hypershift |
+
 
 Used in:
+* [TemplateContext](#templatecontext)
 
-- [TemplateContext](#templatecontext)
 
 ### PackageEnvironmentHyperShift
 
 PackageEnvironmentHyperShift contains HyperShift specific information.
 Only available when installed alongside HyperShift.
-<https://github.com/openshift/hypershift>
+https://github.com/openshift/hypershift
 
 | Field | Description |
 | ----- | ----------- |
-| `hostedCluster` <b>required</b><br><a href="#packageenvironmenthypershifthostedcluster">PackageEnvironmentHyperShiftHostedCluster</a> | Contains HyperShift HostedCluster specific information.<br>This information is only available when installed alongside HyperShift within a HostedCluster Namespace.<br><https://github.com/openshift/hypershift> |
+| `hostedCluster` <b>required</b><br><a href="#packageenvironmenthypershifthostedcluster">PackageEnvironmentHyperShiftHostedCluster</a> | Contains HyperShift HostedCluster specific information.<br>This information is only available when installed alongside HyperShift within a HostedCluster Namespace.<br>https://github.com/openshift/hypershift |
+
 
 Used in:
+* [PackageEnvironment](#packageenvironment)
 
-- [PackageEnvironment](#packageenvironment)
 
 ### PackageEnvironmentHyperShiftHostedCluster
 
 PackageEnvironmentHyperShiftHostedCluster contains HyperShift HostedCluster specific information.
 This information is only available when installed alongside HyperShift within a HostedCluster Namespace.
-<https://github.com/openshift/hypershift>
+https://github.com/openshift/hypershift
 
 | Field | Description |
 | ----- | ----------- |
 | `metadata` <b>required</b><br><a href="#templatecontextobjectmeta">TemplateContextObjectMeta</a> | TemplateContextObjectMeta represents a simplified version of metav1.ObjectMeta for use in templates. |
 | `hostedClusterNamespace` <b>required</b><br>string | Namespace of HostedCluster components belonging to this HostedCluster object. |
 
-Used in:
 
-- [PackageEnvironmentHyperShift](#packageenvironmenthypershift)
+Used in:
+* [PackageEnvironmentHyperShift](#packageenvironmenthypershift)
+
 
 ### PackageEnvironmentKubernetes
 
@@ -1391,9 +1521,10 @@ PackageEnvironmentKubernetes configures kubernetes environments.
 | ----- | ----------- |
 | `version` <b>required</b><br>string | Kubernetes server version. |
 
-Used in:
 
-- [PackageEnvironment](#packageenvironment)
+Used in:
+* [PackageEnvironment](#packageenvironment)
+
 
 ### PackageEnvironmentManagedOpenShift
 
@@ -1403,9 +1534,10 @@ PackageEnvironmentManagedOpenShift describes managed OpenShift environments.
 | ----- | ----------- |
 | `data` <b>required</b><br><a href="#map[string]string">map[string]string</a> | Data key-value pairs describing details of the Managed OpenShift environment. |
 
-Used in:
 
-- [PackageEnvironmentOpenShift](#packageenvironmentopenshift)
+Used in:
+* [PackageEnvironmentOpenShift](#packageenvironmentopenshift)
+
 
 ### PackageEnvironmentOpenShift
 
@@ -1416,15 +1548,16 @@ PackageEnvironmentOpenShift configures openshift environments.
 | `version` <b>required</b><br>string | OpenShift server version. |
 | `managed` <br><a href="#packageenvironmentmanagedopenshift">PackageEnvironmentManagedOpenShift</a> | ManagedOpenShift environment information. This section is only set when a managed OpenShift cluster is detected.<br>This includes Red Hat OpenShift Dedicated, Red Hat OpenShift Service on AWS (ROSA) and<br>Azure Red Hat OpenShift (ARO) and their Hosted Control Plane variants. |
 
-Used in:
 
-- [PackageEnvironment](#packageenvironment)
+Used in:
+* [PackageEnvironment](#packageenvironment)
+
 
 ### PackageEnvironmentProxy
 
 PackageEnvironmentProxy configures proxy environments.
 On OpenShift, this config is taken from the cluster Proxy object.
-<https://docs.openshift.com/container-platform/4.13/networking/enable-cluster-wide-proxy.html>
+https://docs.openshift.com/container-platform/4.13/networking/enable-cluster-wide-proxy.html
 
 | Field | Description |
 | ----- | ----------- |
@@ -1432,9 +1565,10 @@ On OpenShift, this config is taken from the cluster Proxy object.
 | `httpsProxy` <br>string | HTTPS_PROXY |
 | `noProxy` <br>string | NO_PROXY |
 
-Used in:
 
-- [PackageEnvironment](#packageenvironment)
+Used in:
+* [PackageEnvironment](#packageenvironment)
+
 
 ### PackageManifestConstraint
 
@@ -1446,10 +1580,11 @@ PackageManifestConstraint configures environment constraints to block package in
 | `platform` <br><a href="#platformname">[]PlatformName</a> | Valid platforms that support this package. |
 | `uniqueInScope` <br><a href="#packagemanifestuniqueinscopeconstraint">PackageManifestUniqueInScopeConstraint</a> | Constraints this package to be only installed once in the Cluster or once in the same Namespace. |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
-- [RepositoryEntryData](#repositoryentrydata)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+* [RepositoryEntryData](#repositoryentrydata)
+
 
 ### PackageManifestDependency
 
@@ -1459,9 +1594,10 @@ PackageManifestDependency uses a solver to find the latest version package image
 | ----- | ----------- |
 | `image` <br><a href="#packagemanifestdependencyimage">PackageManifestDependencyImage</a> | Resolves the dependency as a image url and digest and commits it to the PackageManifestLock. |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+
 
 ### PackageManifestDependencyImage
 
@@ -1473,9 +1609,10 @@ PackageManifestDependencyImage represents a dependency image found by the solver
 | `package` <b>required</b><br>string | Package FQDN <package-name>.<repository name> |
 | `range` <b>required</b><br>string | Semantic Versioning 2.0.0 version range. |
 
-Used in:
 
-- [PackageManifestDependency](#packagemanifestdependency)
+Used in:
+* [PackageManifestDependency](#packagemanifestdependency)
+
 
 ### PackageManifestFilter
 
@@ -1486,9 +1623,10 @@ PackageManifestFilter is used to conditionally render objects based on CEL expre
 | `conditions` <br><a href="#packagemanifestnamedcondition">[]PackageManifestNamedCondition</a> | Reusable CEL expressions. Can be used in 'package-operator.run/condition' annotations.<br>They are evaluated once per package. |
 | `paths` <br><a href="#packagemanifestpath">[]PackageManifestPath</a> | Adds CEL conditions to file system paths matching a glob pattern.<br>If a single condition matching a file system object's path evaluates to false,<br>the object is ignored. |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+
 
 ### PackageManifestImage
 
@@ -1499,9 +1637,10 @@ PackageManifestImage specifies an image tag to be resolved.
 | `name` <b>required</b><br>string | Image name to be use to reference it in the templates |
 | `image` <b>required</b><br>string | Image identifier (REPOSITORY[:TAG]) |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+
 
 ### PackageManifestLockDependency
 
@@ -1514,9 +1653,10 @@ PackageManifestLockDependency defines a dependency of this package.
 | `digest` <b>required</b><br>string | Image digest |
 | `version` <b>required</b><br>string | Version of the dependency that has been chosen. |
 
-Used in:
 
-- [PackageManifestLockSpec](#packagemanifestlockspec)
+Used in:
+* [PackageManifestLockSpec](#packagemanifestlockspec)
+
 
 ### PackageManifestLockImage
 
@@ -1528,9 +1668,10 @@ PackageManifestLockImage contains information about a resolved image.
 | `image` <b>required</b><br>string | Image identifier (REPOSITORY[:TAG]) |
 | `digest` <b>required</b><br>string | Image digest |
 
-Used in:
 
-- [PackageManifestLockSpec](#packagemanifestlockspec)
+Used in:
+* [PackageManifestLockSpec](#packagemanifestlockspec)
+
 
 ### PackageManifestLockSpec
 
@@ -1541,9 +1682,10 @@ PackageManifestLockSpec defines a set of packages that are locked to a specific 
 | `images` <b>required</b><br><a href="#packagemanifestlockimage">[]PackageManifestLockImage</a> | List of resolved images |
 | `dependencies` <br><a href="#packagemanifestlockdependency">[]PackageManifestLockDependency</a> | List of resolved dependency images. |
 
-Used in:
 
-- [PackageManifestLock](#packagemanifestlock)
+Used in:
+* [PackageManifestLock](#packagemanifestlock)
+
 
 ### PackageManifestNamedCondition
 
@@ -1556,9 +1698,10 @@ and its value is set to the result of Expression ("true"/"false").
 | `name` <b>required</b><br>string | A unique name. Must match the CEL identifier pattern: [_a-zA-Z][_a-zA-Z0-9]* |
 | `expression` <b>required</b><br>string | A CEL expression with a boolean output type.<br>Has access to the full template context. |
 
-Used in:
 
-- [PackageManifestFilter](#packagemanifestfilter)
+Used in:
+* [PackageManifestFilter](#packagemanifestfilter)
+
 
 ### PackageManifestPath
 
@@ -1567,12 +1710,13 @@ render package objects based on their path.
 
 | Field | Description |
 | ----- | ----------- |
-| `glob` <b>required</b><br>string | A file system path glob pattern.<br>Syntax: <https://pkg.go.dev/github.com/bmatcuk/doublestar@v1.3.4#Match> |
+| `glob` <b>required</b><br>string | A file system path glob pattern.<br>Syntax: https://pkg.go.dev/github.com/bmatcuk/doublestar@v1.3.4#Match |
 | `expression` <b>required</b><br>string | A CEL expression with a boolean output type.<br>Has access to the full template context and named conditions. |
 
-Used in:
 
-- [PackageManifestFilter](#packagemanifestfilter)
+Used in:
+* [PackageManifestFilter](#packagemanifestfilter)
+
 
 ### PackageManifestPhase
 
@@ -1583,9 +1727,10 @@ PackageManifestPhase defines a package phase.
 | `name` <b>required</b><br>string | Name of the reconcile phase. Must be unique within a PackageManifest |
 | `class` <br>string | If non empty, phase reconciliation is delegated to another controller.<br>If set to the string "default" the built-in controller reconciling the object.<br>If set to any other string, an out-of-tree controller needs to be present to handle ObjectSetPhase objects. |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+
 
 ### PackageManifestPlatformVersionConstraint
 
@@ -1599,9 +1744,10 @@ Use the Platform constraint to enforce running on a specific platform.
 | `name` <b>required</b><br><a href="#platformname">PlatformName</a> | Name of the platform this constraint should apply to. |
 | `range` <b>required</b><br>string | Semantic Versioning 2.0.0 version range. |
 
-Used in:
 
-- [PackageManifestConstraint](#packagemanifestconstraint)
+Used in:
+* [PackageManifestConstraint](#packagemanifestconstraint)
+
 
 ### PackageManifestRepository
 
@@ -1613,9 +1759,10 @@ which could be loaded either from a local file or from a container image.
 | `file` <br>string | References a file in the filesystem to load. |
 | `image` <br>string | References an image in a container image registry. |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+
 
 ### PackageManifestSpec
 
@@ -1635,9 +1782,10 @@ details about phases and availability probes.
 | `repositories` <br><a href="#packagemanifestrepository">[]PackageManifestRepository</a> | Repository references that are used to validate constraints and resolve dependencies. |
 | `dependencies` <br><a href="#packagemanifestdependency">[]PackageManifestDependency</a> | Dependency references to resolve and use within this package. |
 
-Used in:
 
-- [PackageManifest](#packagemanifest)
+Used in:
+* [PackageManifest](#packagemanifest)
+
 
 ### PackageManifestSpecConfig
 
@@ -1647,9 +1795,10 @@ PackageManifestSpecConfig configutes a package manifest.
 | ----- | ----------- |
 | `openAPIV3Schema` <br>apiextensionsv1.JSONSchemaProps | OpenAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning. |
 
-Used in:
 
-- [PackageManifestSpec](#packagemanifestspec)
+Used in:
+* [PackageManifestSpec](#packagemanifestspec)
+
 
 ### PackageManifestTest
 
@@ -1660,9 +1809,10 @@ PackageManifestTest configures test cases.
 | `template` <br><a href="#packagemanifesttestcasetemplate">[]PackageManifestTestCaseTemplate</a> | Template testing configuration. |
 | `kubeconform` <br><a href="#packagemanifesttestkubeconform">PackageManifestTestKubeconform</a> | PackageManifestTestKubeconform configures kubeconform testing. |
 
-Used in:
 
-- [PackageManifest](#packagemanifest)
+Used in:
+* [PackageManifest](#packagemanifest)
+
 
 ### PackageManifestTestCaseTemplate
 
@@ -1673,9 +1823,10 @@ PackageManifestTestCaseTemplate template testing configuration.
 | `name` <b>required</b><br>string | Name describing the test case. |
 | `context` <br><a href="#templatecontext">TemplateContext</a> | Template data to use in the test case. |
 
-Used in:
 
-- [PackageManifestTest](#packagemanifesttest)
+Used in:
+* [PackageManifestTest](#packagemanifesttest)
+
 
 ### PackageManifestTestKubeconform
 
@@ -1684,11 +1835,12 @@ PackageManifestTestKubeconform configures kubeconform testing.
 | Field | Description |
 | ----- | ----------- |
 | `kubernetesVersion` <b>required</b><br>string | Kubernetes version to use schemas from. |
-| `schemaLocations` <br>[]string | OpenAPI schema locations for kubeconform<br>defaults to:<br>- <https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/>{{ .NormalizedKubernetesVersion }}-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json<br>- <https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json> |
+| `schemaLocations` <br>[]string | OpenAPI schema locations for kubeconform<br>defaults to:<br>- https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json<br>- https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json |
+
 
 Used in:
+* [PackageManifestTest](#packagemanifesttest)
 
-- [PackageManifestTest](#packagemanifesttest)
 
 ### RepositoryEntryData
 
@@ -1702,9 +1854,10 @@ RepositoryEntryData is the part of RepositoryEntry containing the actual data.
 | `constraints` <br><a href="#packagemanifestconstraint">[]PackageManifestConstraint</a> | Constraints of the package. |
 | `name` <br>string | Name of the package. |
 
-Used in:
 
-- [RepositoryEntry](#repositoryentry)
+Used in:
+* [RepositoryEntry](#repositoryentry)
+
 
 ### TemplateContext
 
@@ -1716,9 +1869,10 @@ TemplateContext is available within the package templating process.
 | `config` <br>runtime.RawExtension | Configuration as presented via the (Cluster)Package API after admission. |
 | `environment` <b>required</b><br><a href="#packageenvironment">PackageEnvironment</a> | Environment specific information. |
 
-Used in:
 
-- [PackageManifestTestCaseTemplate](#packagemanifesttestcasetemplate)
+Used in:
+* [PackageManifestTestCaseTemplate](#packagemanifesttestcasetemplate)
+
 
 ### TemplateContextObjectMeta
 
@@ -1731,10 +1885,11 @@ TemplateContextObjectMeta represents a simplified version of metav1.ObjectMeta f
 | `labels` <b>required</b><br><a href="#map[string]string">map[string]string</a> |  |
 | `annotations` <b>required</b><br><a href="#map[string]string">map[string]string</a> |  |
 
-Used in:
 
-- [PackageEnvironmentHyperShiftHostedCluster](#packageenvironmenthypershifthostedcluster)
-- [TemplateContextPackage](#templatecontextpackage)
+Used in:
+* [PackageEnvironmentHyperShiftHostedCluster](#packageenvironmenthypershifthostedcluster)
+* [TemplateContextPackage](#templatecontextpackage)
+
 
 ### TemplateContextPackage
 
@@ -1745,6 +1900,6 @@ TemplateContextPackage represents the (Cluster)Package object requesting this pa
 | `metadata` <b>required</b><br><a href="#templatecontextobjectmeta">TemplateContextObjectMeta</a> | TemplateContextObjectMeta represents a simplified version of metav1.ObjectMeta for use in templates. |
 | `image` <b>required</b><br>string | Image as presented via the (Cluster)Package API after admission. |
 
-Used in:
 
-- [TemplateContext](#templatecontext)
+Used in:
+* [TemplateContext](#templatecontext)
