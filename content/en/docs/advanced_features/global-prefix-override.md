@@ -3,7 +3,11 @@ title: Global Image Prefix Override
 weight: 2001
 ---
 
-The Global Image Prefix Override feature enables deployment of upstream package-operator artifacts from private registries without rebuilding them in downstream pipelines. This solves the previously impossible scenario where organizations needed to mirror upstream images while maintaining original deployment manifests, without referencing the workload images with PKO's internal image digest feature.
+The Global Image Prefix Override feature allows using mirrored package and workload images from a private registry without needing to rebuild the images with new image references.
+
+This feature solves the problem of mirroring upstream images while preserving their original deployment manifests, all without relying on the Package Operator's internal image digest feature.
+
+For example, this could enable deployment of upstream package-operator artifacts from private registries without rebuilding them in downstream pipelines. This solves the previously impossible scenario where organizations needed to mirror upstream images while maintaining original deployment manifests, without referencing the workload images with PKO's internal image digest feature.
 
 ## Implementation
 
@@ -15,7 +19,7 @@ Both accept mappings in `from=to` format (e.g., `quay.io/my-org/=mirror.example.
 
 ## Usage Example
 
-The following `mirror.sh` script demonstrates a the mirroring of the images and the modification of the bootstrap job manifests. (Images for version v1.82.2 are mirrored from the namespace `quary.io/package-operator` into the namespace `quay.io/erdii-test/pko-mirror`).
+The following `mirror.sh` script demonstrates a the mirroring of the images and the modification of the bootstrap job manifests. (Images for version v1.82.2 are mirrored from the namespace `quay.io/package-operator` into the namespace `quay.io/erdii-test/pko-mirror`).
 
 ```bash
 #!/bin/bash
@@ -73,7 +77,7 @@ The second `yq` command handles hardcoded image references that bypass the prefi
 Modifying the container's `.image` field
 Updating the first command-line argument in .args[0]
 
-This is required as some componenets might directly reference images without respecting the prefix override, so the need to be explicitly changed. This ensures all PKO package image pulls during bootstrap come from your mirror location.
+This is required as some components might directly reference images without respecting the prefix override, so they need to be explicitly changed. This ensures all PKO package image pulls during bootstrap come from your mirror location.
   
 # Deployment Process
 
