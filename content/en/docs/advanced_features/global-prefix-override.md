@@ -7,7 +7,7 @@ The Global Image Prefix Override feature allows using mirrored package and workl
 
 This feature solves the problem of mirroring upstream images while preserving their original deployment manifests, all without relying on the Package Operator's internal image digest feature.
 
-For example, this could enable deployment of upstream package-operator artifacts from private registries without rebuilding them in downstream pipelines. This solves the previously impossible scenario where organizations needed to mirror upstream images while maintaining original deployment manifests, without referencing the workload images with PKO's internal image digest feature.
+For example, this enables deployment of upstream package-operator artifacts from private registries without rebuilding them in downstream pipelines. This solves the previously impossible scenario where organizations needed to mirror upstream images, because PKO's internal image digest feature insist on referencing images by their original address.
 
 ## Implementation
 
