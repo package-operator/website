@@ -77,7 +77,9 @@ The second `yq` command handles hardcoded image references that bypass the prefi
 Modifying the container's `.image` field
 Updating the first command-line argument in .args[0]
 
-This is required as some components might directly reference images without respecting the prefix override, so they need to be explicitly changed. This ensures all PKO package image pulls during bootstrap come from your mirror location.
+To ensure that all artifacts required for PKO's bootstrap procedure are pulled correctly , it is required to reference the bootstrap job workload image directly from the mirrored location.
+
+The package image location also gets replaced for readability reasons.
   
 # Deployment Process
 
