@@ -19,7 +19,7 @@ Both accept mappings in `from=to` format (e.g., `quay.io/my-org/=mirror.example.
 
 ## Usage Example
 
-The following `mirror.sh` script demonstrates a the mirroring of the images and the modification of the bootstrap job manifests. (Images for version v1.82.2 are mirrored from the namespace `quay.io/package-operator` into the namespace `quay.io/erdii-test/pko-mirror`).
+The following `mirror.sh` script demonstrates the mirroring of the images and the modification of the bootstrap job manifests. (Images for version v1.82.2 are mirrored from the registry namespace `quay.io/package-operator` into the registry namespace `quay.io/erdii-test/pko-mirror`).
 
 ```bash
 #!/bin/bash
