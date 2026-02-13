@@ -432,7 +432,8 @@ spec:
       alphanumericAsc: {}
       static:
       - nonumy
-  strategy: '{instant:{}}'
+  strategy:
+    instant: {}
   template:
     metadata: {}
     spec:
@@ -750,7 +751,7 @@ objects:
 ### ObjectTemplate
 
 ObjectTemplate contain a go template of a Kubernetes manifest. This manifest is then templated with the
-sources provided in the .Spec.Sources. The sources can only come from objects within the same nampespace
+sources provided in the .Spec.Sources. The sources can only come from objects within the same namespace
 as the ObjectTemplate.
 
 
@@ -798,7 +799,7 @@ status:
 
 ### Package
 
-Package defines a namespaced package installationn.
+Package defines a namespaced package installation.
 
 
 **Example**
