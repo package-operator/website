@@ -47,6 +47,7 @@ containing basic building blocks that other auxiliary APIs can build on top of.
 * [ClusterObjectSlice](#clusterobjectslice)
 * [ClusterObjectTemplate](#clusterobjecttemplate)
 * [ClusterPackage](#clusterpackage)
+* [HostedClusterPackage](#hostedclusterpackage)
 * [ObjectDeployment](#objectdeployment)
 * [ObjectSet](#objectset)
 * [ObjectSetPhase](#objectsetphase)
@@ -124,6 +125,7 @@ status:
     kind: sadipscing
     name: sed
     namespace: diam
+    version: nonumy
   revision: 42
   templateHash: consetetur
 
@@ -178,22 +180,23 @@ spec:
           app.kubernetes.io/name: example-operator
   lifecycleState: Active
   phases:
-  - class: eirmod
-    name: nonumy
+  - class: tempor
+    name: eirmod
     objects:
     - collisionProtection: Prevent
       conditionMappings:
-      - destinationType: lorem
-        sourceType: tempor
+      - destinationType: ipsum
+        sourceType: lorem
       object:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: example-deployment
     slices:
-    - ipsum
+    - dolor
   previous:
   - name: previous-revision
+  revision: 42
   successDelaySeconds: 42
 status:
   conditions:
@@ -202,12 +205,13 @@ status:
     status: "True"
     type: Available
   controllerOf:
-  - group: amet
-    kind: sit
-    name: consetetur
-    namespace: sadipscing
+  - group: consetetur
+    kind: amet
+    name: sadipscing
+    namespace: elitr
+    version: sed
   remotePhases:
-  - name: dolor
+  - name: sit
     uid: 3490a790-05f8-4bd7-8333-1001c49fccd2
   revision: 42
 
@@ -257,8 +261,8 @@ spec:
   objects:
   - collisionProtection: Prevent
     conditionMappings:
-    - destinationType: sed
-      sourceType: elitr
+    - destinationType: nonumy
+      sourceType: diam
     object:
       apiVersion: apps/v1
       kind: Deployment
@@ -273,10 +277,11 @@ status:
   - status: "True"
     type: Available
   controllerOf:
-  - group: nonumy
-    kind: diam
-    name: eirmod
-    namespace: tempor
+  - group: tempor
+    kind: eirmod
+    name: lorem
+    namespace: ipsum
+    version: dolor
 
 ```
 
@@ -305,8 +310,8 @@ metadata:
 objects:
 - collisionProtection: Prevent
   conditionMappings:
-  - destinationType: ipsum
-    sourceType: lorem
+  - destinationType: amet
+    sourceType: sit
   object:
     apiVersion: apps/v1
     kind: Deployment
@@ -338,15 +343,15 @@ metadata:
   name: example
 spec:
   sources:
-  - apiVersion: sit
+  - apiVersion: sadipscing
     items:
-    - destination: sed
-      key: elitr
-    kind: amet
-    name: sadipscing
-    namespace: consetetur
+    - destination: eirmod
+      key: nonumy
+    kind: elitr
+    name: diam
+    namespace: sed
     optional: true
-  template: dolor
+  template: consetetur
 status:
   conditions:
   - message: Latest Revision is Available.
@@ -354,10 +359,11 @@ status:
     status: "True"
     type: Available
   controllerOf:
-    group: nonumy
-    kind: diam
-    name: eirmod
-    namespace: tempor
+    group: lorem
+    kind: tempor
+    name: ipsum
+    namespace: dolor
+    version: sit
 
 ```
 
@@ -382,9 +388,9 @@ kind: ClusterPackage
 metadata:
   name: example
 spec:
-  component: ipsum
+  component: consetetur
   config: {}
-  image: lorem
+  image: amet
   paused: true
 status:
   conditions:
@@ -393,7 +399,7 @@ status:
     status: "True"
     type: Available
   revision: 42
-  unpackedHash: dolor
+  unpackedHash: sadipscing
 
 ```
 
@@ -403,6 +409,68 @@ status:
 | `metadata` <br>metav1.ObjectMeta |  |
 | `spec` <br><a href="#packagespec">PackageSpec</a> | PackageSpec specifies a package. |
 | `status` <br><a href="#packagestatus">PackageStatus</a> | PackageStatus defines the observed state of a Package. |
+
+
+### HostedClusterPackage
+
+HostedClusterPackage defines package to be rolled out on every HyperShift HostedCluster.
+Experimental: Subject to change.
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: HostedClusterPackage
+metadata:
+  name: example
+spec:
+  hostedClusterSelector: {}
+  partition:
+    labelKey: diam
+    order:
+      alphanumericAsc: {}
+      static:
+      - nonumy
+  strategy: '{instant:{}}'
+  template:
+    metadata: {}
+    spec:
+      component: sed
+      config: {}
+      image: elitr
+      paused: true
+status:
+  availablePackages: 42
+  conditions:
+  - message: Latest Revision is Available.
+    reason: Available
+    status: "True"
+    type: Available
+  observedGeneration: 42
+  partitions:
+  - availablePackages: 42
+    name: eirmod
+    observedGeneration: 42
+    progressedPackages: 42
+    totalPackages: 42
+    updatedPackages: 42
+  processing:
+  - name: tempor
+    namespace: lorem
+    uid: 3490a790-05f8-4bd7-8333-1001c49fccd2
+  progressedPackages: 42
+  totalPackages: 42
+  updatedPackages: 42
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#hostedclusterpackagespec">HostedClusterPackageSpec</a> | HostedClusterPackageSpec is the description of a HostedClusterPackage. |
+| `status` <br><a href="#hostedclusterpackagestatus">HostedClusterPackageStatus</a> | HostedClusterPackageStatus describes the status of a HostedClusterPackage. |
 
 
 ### ObjectDeployment
@@ -448,20 +516,20 @@ spec:
             matchLabels:
               app.kubernetes.io/name: example-operator
       phases:
-      - class: amet
-        name: sit
+      - class: dolor
+        name: ipsum
         objects:
         - collisionProtection: Prevent
           conditionMappings:
-          - destinationType: sadipscing
-            sourceType: consetetur
+          - destinationType: amet
+            sourceType: sit
           object:
             apiVersion: apps/v1
             kind: Deployment
             metadata:
               name: example-deployment
         slices:
-        - elitr
+        - consetetur
       successDelaySeconds: 42
 status:
   collisionCount: 42
@@ -471,12 +539,13 @@ status:
     status: "True"
     type: Available
   controllerOf:
-  - group: nonumy
-    kind: diam
-    name: eirmod
-    namespace: tempor
+  - group: sed
+    kind: elitr
+    name: diam
+    namespace: nonumy
+    version: eirmod
   revision: 42
-  templateHash: sed
+  templateHash: sadipscing
 
 ```
 
@@ -530,22 +599,23 @@ spec:
           app.kubernetes.io/name: example-operator
   lifecycleState: Active
   phases:
-  - class: ipsum
-    name: lorem
+  - class: lorem
+    name: tempor
     objects:
     - collisionProtection: Prevent
       conditionMappings:
-      - destinationType: sit
-        sourceType: dolor
+      - destinationType: dolor
+        sourceType: ipsum
       object:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: example-deployment
     slices:
-    - amet
+    - sit
   previous:
   - name: previous-revision
+  revision: 42
   successDelaySeconds: 42
 status:
   conditions:
@@ -554,12 +624,13 @@ status:
     status: "True"
     type: Available
   controllerOf:
-  - group: elitr
-    kind: sadipscing
-    name: sed
-    namespace: diam
+  - group: sadipscing
+    kind: consetetur
+    name: elitr
+    namespace: sed
+    version: diam
   remotePhases:
-  - name: consetetur
+  - name: amet
     uid: 3490a790-05f8-4bd7-8333-1001c49fccd2
   revision: 42
 
@@ -629,6 +700,7 @@ status:
     kind: tempor
     name: ipsum
     namespace: dolor
+    version: sit
 
 ```
 
@@ -658,8 +730,8 @@ metadata:
 objects:
 - collisionProtection: Prevent
   conditionMappings:
-  - destinationType: amet
-    sourceType: sit
+  - destinationType: consetetur
+    sourceType: amet
   object:
     apiVersion: apps/v1
     kind: Deployment
@@ -692,15 +764,15 @@ metadata:
   namespace: default
 spec:
   sources:
-  - apiVersion: sadipscing
+  - apiVersion: elitr
     items:
-    - destination: eirmod
-      key: nonumy
-    kind: elitr
-    name: diam
-    namespace: sed
+    - destination: tempor
+      key: eirmod
+    kind: sed
+    name: nonumy
+    namespace: diam
     optional: true
-  template: consetetur
+  template: sadipscing
 status:
   conditions:
   - message: Latest Revision is Available.
@@ -708,10 +780,11 @@ status:
     status: "True"
     type: Available
   controllerOf:
-    group: lorem
-    kind: tempor
-    name: ipsum
-    namespace: dolor
+    group: ipsum
+    kind: lorem
+    name: dolor
+    namespace: sit
+    version: amet
 
 ```
 
@@ -737,9 +810,9 @@ metadata:
   name: example
   namespace: default
 spec:
-  component: amet
+  component: sadipscing
   config: {}
-  image: sit
+  image: consetetur
   paused: true
 status:
   conditions:
@@ -748,7 +821,7 @@ status:
     status: "True"
     type: Available
   revision: 42
-  unpackedHash: consetetur
+  unpackedHash: elitr
 
 ```
 
@@ -836,6 +909,7 @@ ClusterObjectSetSpec defines the desired state of a ClusterObjectSet.
 | ----- | ----------- |
 | `lifecycleState` <br><a href="#objectsetlifecyclestate">ObjectSetLifecycleState</a> | Specifies the lifecycle state of the ClusterObjectSet. |
 | `previous` <br><a href="#previousrevisionreference">[]PreviousRevisionReference</a> | Previous revisions of the ClusterObjectSet to adopt objects from. |
+| `revision` <br>int64 | Computed revision number, monotonically increasing. |
 | `phases` <br><a href="#objectsettemplatephase">[]ObjectSetTemplatePhase</a> | Reconcile phase configuration for a ObjectSet.<br>Phases will be reconciled in order and the contained objects checked<br>against given probes before continuing with the next phase. |
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `successDelaySeconds` <br>int32 | Success Delay Seconds applies a wait period from the time an<br>Object Set is available to the time it is marked as successful.<br>This can be used to prevent false reporting of success when<br>the underlying objects may initially satisfy the availability<br>probes, but are ultimately unstable. |
@@ -852,7 +926,7 @@ ClusterObjectSetStatus defines the observed state of a ClusterObjectSet.
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `revision` <br>int64 | Computed revision number, monotonically increasing. |
+| `revision` <br>int64 | Deprecated: use .spec.revision instead |
 | `remotePhases` <br><a href="#remotephasereference">[]RemotePhaseReference</a> | Remote phases aka ClusterObjectSetPhase objects. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | References all objects controlled by this instance. |
 
@@ -885,6 +959,7 @@ ControlledObjectReference an object controlled by this object.
 | `group` <b>required</b><br>string | Object Group. |
 | `name` <b>required</b><br>string | Object Name. |
 | `namespace` <br>string | Object Namespace. |
+| `version` <b>required</b><br>string | Object Version. |
 
 
 Used in:
@@ -895,6 +970,135 @@ Used in:
 * [ObjectSetPhaseStatus](#objectsetphasestatus)
 * [ObjectSetStatus](#objectsetstatus)
 * [ObjectTemplateStatus](#objecttemplatestatus)
+
+
+### HostedClusterPackagePartitionOrderSpec
+
+HostedClusterPackagePartitionOrderSpec describes ordering for a partition.
+
+| Field | Description |
+| ----- | ----------- |
+| `static` <br>[]string | Allows to define a static partition order.<br>The special * key matches anything not explicitly part of the list.<br>Unknown risk-groups or HostedClusters without label<br>will be put into an implicit "unknown" group and<br>will get upgraded LAST. |
+| `alphanumericAsc` <br><a href="#hostedclusterpackagepartitionorderalphanumericasc">HostedClusterPackagePartitionOrderAlphanumericAsc</a> |  |
+
+
+Used in:
+* [HostedClusterPackagePartitionSpec](#hostedclusterpackagepartitionspec)
+
+
+### HostedClusterPackagePartitionSpec
+
+HostedClusterPackagePartitionSpec describes settings to partition HostedClusters into groups for upgrades.
+Partitions will be upgraded after each other:
+Upgrades in the next partition will only start after the previous has finished.
+HostedClusters without the label will be put into an implicit "unknown" group
+and will get upgraded LAST.
+
+| Field | Description |
+| ----- | ----------- |
+| `labelKey` <b>required</b><br>string | LabelKey defines a labelKey to group objects on. |
+| `order` <br><a href="#hostedclusterpackagepartitionorderspec">HostedClusterPackagePartitionOrderSpec</a> | Controls how partitions are ordered.<br>By default items will be sorted AlphaNumeric ascending. |
+
+
+Used in:
+* [HostedClusterPackageSpec](#hostedclusterpackagespec)
+
+
+### HostedClusterPackagePartitionStatus
+
+HostedClusterPackagePartitionStatus describes the status of a partition.
+
+| Field | Description |
+| ----- | ----------- |
+| `name` <b>required</b><br>string | Name of the partition. |
+| `observedGeneration` <br>int32 | The generation observed by the HostedClusterPackage controller. |
+| `availablePackages` <br>int32 | Total number of available Packages targeted by this HostedClusterPackage. |
+| `progressedPackages` <br>int32 | Total number of Packages with Progressing=False and Unpacked=True conditions. |
+| `updatedPackages` <br>int32 | Total number of non-terminated Packages targeted by this HostedClusterPackage that have the desired template spec. |
+| `totalPackages` <br>int32 | Total number of non-terminated Packages targeted by this HostedClusterPackage. |
+
+
+Used in:
+* [HostedClusterPackageStatus](#hostedclusterpackagestatus)
+
+
+### HostedClusterPackageRefStatus
+
+HostedClusterPackageRefStatus holds a reference to upgrades in-flight.
+
+| Field | Description |
+| ----- | ----------- |
+| `uid` <b>required</b><br>types.UID |  |
+| `name` <b>required</b><br>string |  |
+| `namespace` <br>string |  |
+
+
+Used in:
+* [HostedClusterPackageStatus](#hostedclusterpackagestatus)
+
+
+### HostedClusterPackageSpec
+
+HostedClusterPackageSpec is the description of a HostedClusterPackage.
+
+| Field | Description |
+| ----- | ----------- |
+| `strategy` <b>required</b><br><a href="#hostedclusterpackagestrategy">HostedClusterPackageStrategy</a> | HostedClusterPackageStrategy describes the rollout strategy for a HostedClusterPackage. |
+| `hostedClusterSelector` <br>metav1.LabelSelector | HostedClusterSelector is a label query matching HostedClusters that the Package should be rolled out to. |
+| `template` <b>required</b><br><a href="#packagetemplatespec">PackageTemplateSpec</a> | Template describes the Package that should be created when new<br>HostedClusters matching the hostedClusterSelector are detected. |
+| `partition` <br><a href="#hostedclusterpackagepartitionspec">HostedClusterPackagePartitionSpec</a> | Partition HostedClusters by label value.<br>All packages in the same partition will have to be upgraded<br>before progressing to the next partition. |
+
+
+Used in:
+* [HostedClusterPackage](#hostedclusterpackage)
+
+
+### HostedClusterPackageStatus
+
+HostedClusterPackageStatus describes the status of a HostedClusterPackage.
+
+| Field | Description |
+| ----- | ----------- |
+| `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions this object is in. |
+| `partitions` <br><a href="#hostedclusterpackagepartitionstatus">[]HostedClusterPackagePartitionStatus</a> | Count of packages found by partition. |
+| `processing` <br><a href="#hostedclusterpackagerefstatus">[]HostedClusterPackageRefStatus</a> | Processing set of packages during upgrade. |
+| `observedGeneration` <br>int32 | The generation observed by the HostedClusterPackage controller. |
+| `availablePackages` <br>int32 | Total number of available Packages targeted by this HostedClusterPackage. |
+| `progressedPackages` <br>int32 | Total number of Packages with Progressing=False and Unpacked=True conditions. |
+| `updatedPackages` <br>int32 | Total number of non-terminated Packages targeted by this HostedClusterPackage that have the desired template spec. |
+| `totalPackages` <br>int32 | Total number of non-terminated Packages targeted by this HostedClusterPackage. |
+
+
+Used in:
+* [HostedClusterPackage](#hostedclusterpackage)
+
+
+### HostedClusterPackageStrategy
+
+HostedClusterPackageStrategy describes the rollout strategy for a HostedClusterPackage.
+
+| Field | Description |
+| ----- | ----------- |
+| `instant` <br><a href="#hostedclusterpackagestrategyinstant">HostedClusterPackageStrategyInstant</a> | Updates all matching Packages instantly. |
+| `rollingUpgrade` <br><a href="#hostedclusterpackagestrategyrollingupgrade">HostedClusterPackageStrategyRollingUpgrade</a> | Performs a rolling upgrade according to maxUnavailable. |
+
+
+Used in:
+* [HostedClusterPackageSpec](#hostedclusterpackagespec)
+
+
+### HostedClusterPackageStrategyRollingUpgrade
+
+HostedClusterPackageStrategyRollingUpgrade describes the
+rolling upgrade strategy for HostedClusterPackages.
+
+| Field | Description |
+| ----- | ----------- |
+| `maxUnavailable` <b>required</b><br>int | MaxUnavailable defines how many Packages may become unavailable during upgrade at the same time.<br>Cannot be below 1, because we cannot surge to create more instances. |
+
+
+Used in:
+* [HostedClusterPackageStrategy](#hostedclusterpackagestrategy)
 
 
 ### ObjectDeploymentSpec
@@ -1006,6 +1210,7 @@ ObjectSetSpec defines the desired state of a ObjectSet.
 | ----- | ----------- |
 | `lifecycleState` <br><a href="#objectsetlifecyclestate">ObjectSetLifecycleState</a> | Specifies the lifecycle state of the ObjectSet. |
 | `previous` <br><a href="#previousrevisionreference">[]PreviousRevisionReference</a> | Previous revisions of the ObjectSet to adopt objects from. |
+| `revision` <br>int64 | Computed revision number, monotonically increasing. |
 | `phases` <br><a href="#objectsettemplatephase">[]ObjectSetTemplatePhase</a> | Reconcile phase configuration for a ObjectSet.<br>Phases will be reconciled in order and the contained objects checked<br>against given probes before continuing with the next phase. |
 | `availabilityProbes` <br><a href="#objectsetprobe">[]ObjectSetProbe</a> | Availability Probes check objects that are part of the package.<br>All probes need to succeed for a package to be considered Available.<br>Failing probes will prevent the reconciliation of objects in later phases. |
 | `successDelaySeconds` <br>int32 | Success Delay Seconds applies a wait period from the time an<br>Object Set is available to the time it is marked as successful.<br>This can be used to prevent false reporting of success when<br>the underlying objects may initially satisfy the availability<br>probes, but are ultimately unstable. |
@@ -1022,7 +1227,7 @@ ObjectSetStatus defines the observed state of a ObjectSet.
 | Field | Description |
 | ----- | ----------- |
 | `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
-| `revision` <br>int64 | Computed revision number, monotonically increasing. |
+| `revision` <br>int64 | Deprecated: use .spec.revision instead |
 | `remotePhases` <br><a href="#remotephasereference">[]RemotePhaseReference</a> | Remote phases aka ObjectSetPhase objects. |
 | `controllerOf` <br><a href="#controlledobjectreference">[]ControlledObjectReference</a> | References all objects controlled by this instance. |
 
@@ -1171,6 +1376,7 @@ PackageSpec specifies a package.
 
 
 Used in:
+* [PackageTemplateSpec](#packagetemplatespec)
 * [ClusterPackage](#clusterpackage)
 * [Package](#package)
 
@@ -1189,6 +1395,20 @@ PackageStatus defines the observed state of a Package.
 Used in:
 * [ClusterPackage](#clusterpackage)
 * [Package](#package)
+
+
+### PackageTemplateSpec
+
+PackageTemplateSpec describes the data a package should have when created from a template.
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta | Standard object's metadata.<br>More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata |
+| `spec` <b>required</b><br><a href="#packagespec">PackageSpec</a> | Specification of the desired behavior of the package. |
+
+
+Used in:
+* [HostedClusterPackageSpec](#hostedclusterpackagespec)
 
 
 ### PreviousRevisionReference
